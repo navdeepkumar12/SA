@@ -28,7 +28,7 @@ r = np.transpose([[-1,0,0,1],[-1,0,0,1]]) # reward [R0,R1]
 n,m = 100,20
 P = np.array([p0,p1])
 X = np.random.randint(0,dim,100) # initializing states
-w = np.array([-0.5,0.5,1,-1]) #np.zeros(dim) # initializing whittle index np.array([-0.9,-0.73,-0.5,-0.26,-0.01])#
+w = np.zeros(dim) # initializing whittle index np.array([-0.9,-0.73,-0.5,-0.26,-0.01])#np.array([-0.5,0.5,1,-1]) #
 Q =np.array([r for i in range(dim)], dtype=float)  # initializing Q(x,i,u) = R(i,u)
 log.info('Reward \n{} \n\n Transition matrix \n{}, \n\n total arm {}, active arm {} \n \n'.format(r,P,n,m))
 log.info('Initial whittle index \n{} \n\n Initial Q \n{} \n\n Initial state \n{}'.format(w,Q,X))
@@ -92,24 +92,24 @@ def run(n=1000):
         W.action()
         W.evolve()
         W.update_Q()
-        #W.update_w()
+        W.update_w()
         D.append(W.w)
         temp = np.mean(W.R)
         R.append(temp)
         print(W.w,temp)        
             
-    # plt.plot(D)
-    # plt.title('Whittle index for Exp1')
-    # plt.ylabel('whittle values')
-    # plt.xlabel('n')
-    # plt.savefig('whittle_exp1.png')
-    # plt.close()
+    plt.plot(D)
+    plt.title('Whittle index for Exp1')
+    plt.ylabel('whittle values')
+    plt.xlabel('n')
+    plt.savefig('whittle_exp1.png')
+    plt.close()
     
 
     plt.plot(R)
-    plt.title('Average reward for Exp1 with exact indice')
+    plt.title('Average reward for Exp1')
     plt.ylabel('reward')
     plt.xlabel('n')
-    plt.savefig('reward_exp1_exac.png')
+    plt.savefig('reward_exp1.png')
     plt.close()
     
